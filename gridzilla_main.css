@@ -57,12 +57,22 @@ input.largerCheckbox
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
 }
 
-#plate_entry {
-margin-top:20px;
-margin-left:25px;
+#plate_containers li {
+    margin-top:20px;
+    margin-left:25px;
+    list-style:none;
 }
-#plate_label {
-display:block;
+
+#plate_label{
+width:81px;
+height:19px;
+float:left;
+padding-top:4px;
 }
+
+#plate_left{
+margin-left:10px;
+}
+*/
 
 

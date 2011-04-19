@@ -9,30 +9,28 @@ document.addEventListener("DOMContentLoaded", function() {
     add_plate, false);
 }, false);
 
+var platecount = 1
  
 function add_plate(event){
-console.log("Trying to add plate");
+platecount = platecount + 1;
+if (window.console) {
+console.log("Trying to add plate" + platecount );
+}
+var newplate = ("<li><div class=\"plate_entry\">" +
+    "<label for=\"plate\" id=\"plate_label\">Plate " + platecount + ":</label><input id=\"plate_left\"><input id=\"plate_right\"></div></li>");
 
-aplate_label = document.getElementById("plate_label")
-aplate_left = document.getElementById("plate_left")
-aplate_right = document.getElementById("plate_right")
-
-
-newplate_label = aplate_label.cloneNode(true);
-newplate_left = aplate_left.cloneNode(true);
-newplate_right = aplate_right.cloneNode(true);
-
-document.getElementById("plate_entry").appendChild(newplate_label);
-document.getElementById("plate_entry").appendChild(newplate_left);
-document.getElementById("plate_entry").appendChild(newplate_right);
+document.getElementById("plate_containers").innerHTML  += newplate  ;
 }
 
 
 function clear_all_plates(event)
 {
+if (window.console) {
 console.log("Clearing All Plates:function clear_all_plates_called")
+}
 var caller = event.target || event.srcElement;
 alert ("You clicked " + caller );
+
 }
 
 </script>
@@ -48,9 +46,13 @@ alert ("You clicked " + caller );
 <a class="button orange" href="#" id="clear_all_plates_button">Refresh</a>
 <a class="button orange" href="#" id="add_plate_button">Add Plate</a>
 <a class="button orange" href="#">Freeze Configuration</a>
-<div id="plate_entry">
-<label for="plate" id="plate_label">Plate:</label>
+<div id = "plate_containers">
+<li>
+<div class="plate_entry">
+<label for="plate" id="plate_label">Plate 1:</label>
 <input id="plate_left"><input id="plate_right">
+</div>
+</li>
 </div>
 </body>
 </html>
