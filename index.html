@@ -12,6 +12,19 @@ document.addEventListener("DOMContentLoaded", function() {
  
 function add_plate(event){
 console.log("Trying to add plate");
+
+aplate_label = document.getElementById("plate_label")
+aplate_left = document.getElementById("plate_left")
+aplate_right = document.getElementById("plate_right")
+
+
+newplate_label = aplate_label.cloneNode(true);
+newplate_left = aplate_left.cloneNode(true);
+newplate_right = aplate_right.cloneNode(true);
+
+document.getElementById("plate_entry").appendChild(newplate_label);
+document.getElementById("plate_entry").appendChild(newplate_left);
+document.getElementById("plate_entry").appendChild(newplate_right);
 }
 
 
@@ -36,8 +49,8 @@ alert ("You clicked " + caller );
 <a class="button orange" href="#" id="add_plate_button">Add Plate</a>
 <a class="button orange" href="#">Freeze Configuration</a>
 <div id="plate_entry">
-<label for="plate">Plate:</label>
-	<input id="plate_left"><input id="plate_right">
+<label for="plate" id="plate_label">Plate:</label>
+<input id="plate_left"><input id="plate_right">
 </div>
 </body>
 </html>
