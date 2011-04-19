@@ -1,12 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
             "http://www.w3.org/TR/html4/strict.dtd">
 <script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("clear_all_plates_button").addEventListener("click",
+    clear_all_plates, false);
+    document.getElementById("add_plate_button").addEventListener("click",
+    add_plate, false);
+}, false);
+
+ 
+function add_plate(event){
+console.log("Trying to add plate");
+}
+
+
 function clear_all_plates(event)
 {
 console.log("Clearing All Plates:function clear_all_plates_called")
 var caller = event.target || event.srcElement;
 alert ("You clicked " + caller );
 }
+
 </script>
 
 <style type="text/css">
@@ -17,8 +32,8 @@ alert ("You clicked " + caller );
   <meta name="viewport" content="user-scalable=no, width=device-width" />
 </head>
 <body id="main_frame">
-<a class="button orange" href="#" onclick="clear_all_plates(event)">Refresh</a>
-<a class="button orange" href="#">Add Plate</a>
+<a class="button orange" href="#" id="clear_all_plates_button">Refresh</a>
+<a class="button orange" href="#" id="add_plate_button">Add Plate</a>
 <a class="button orange" href="#">Freeze Configuration</a>
 <div id="plate_entry">
 <label for="plate">Plate:</label>
