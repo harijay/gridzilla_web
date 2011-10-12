@@ -1,9 +1,9 @@
 #main_frame {
 margin-top:20px; 
-position:absolute;
-/*width : 1200px;
+position:relative;
+width : 1200px;
 height: 1500px;
-margin-left : 220px;
+/*margin-left : 220px;
 margin-top : 220px;*/
 }
 .button{
@@ -75,5 +75,18 @@ padding-top:4px;
 margin-left:10px;
 }
 
+#components {
+margin-top : 50px;
+}
 
-
+#component_containers li {
+    margin-top:20px;
+    margin-left:25px;
+    list-style:none;
+}
+#component_label {
+ padding-right:19px;  
+}
+#buffer_label {
+ padding-right:64px;
+}
