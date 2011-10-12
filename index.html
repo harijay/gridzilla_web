@@ -17,7 +17,15 @@ console.log("Loaded");
 }, false);
 
 var platecount = 0
- 
+var component_count = 0 ;
+var buffer_count = 0 ;
+
+
+Object.prototype.isEmpty = function() {
+    for (var prop in this) if (this.hasOwnProperty(prop)) return false;
+    return true;
+};
+
 function add_plate(event){
 
     if (platecount != 0){
@@ -65,41 +73,59 @@ function clear_all_plates(event)
     platecount = 0;
 }
 
-var component_count = 0 ;
-var buffer_count = 0 ;
+
 
 function add_component_entry_widget(event)
-{   
-    if (component_count != 0){
-        var my_comp_dict  = dict_for_component_inputs();
+{   var my_comp_values_dict = {}
+    var my_buf_values_dict = {}
+    if (component_count > 0) {
+        my_comp_values_dict  = dict_for_component_inputs(); 
+    	console.log("HAVE_VALUES_FOR_COMPONENTS_TOTALLING",my_comp_values_dict);
+	}
+    if (buffer_count > 0){
+	my_buf_values_dict = dict_for_buffer_inputs();
     }
     component_count = component_count + 1;
+    
     if(window.console) {
         console.log("Adding component widget:" + component_count);
     }
     var new_component = ("<li><div class=\"component_entry\">" +"<label for=\"component\" id=\"component_label\">Component " + component_count + ":</label><input id=\"component_name_" + component_count + "\"><input id=\"component_concentration_" + component_count + "\"><input id=\"component_volume_" + component_count + "\"></div></li>");
     document.getElementById("component_containers").innerHTML += new_component ;
-    
-    if (typeof my_comp_dict != 'undefined'){
-        var mycomponents = document.getElementsByClassName("component_entry");
+    fill_component_values(my_comp_values_dict);
+    fill_buffer_values(my_buf_values_dict);
+}
 
+function fill_component_values(values_dict)
+{   console.log(values_dict);
+    var my_comp_dict = {}
+    my_comp_dict = values_dict 
+    if(values_dict.isEmpty()){
+		console.log("First Call of fill components");
+		return null;
+	}
+        var mycomponents = document.getElementsByClassName("component_entry");
         for (var i = 1; i <= mycomponents.length ; i++){
-            // TODO figure out why these lookups return errors but yet do the right thing
-            var name = my_comp_dict[i][0] ;
-            var conc = my_comp_dict[i][1] ;
-            var vol = my_comp_dict[i][2];
-            document.getElementById("component_name_" + i).value = name ;
-            document.getElementById("component_concentration_" + i).value = conc ;
-            document.getElementById("component_volume_" + i).value = vol ;
-        }   
-    }
+            if (typeof my_comp_dict[i] != 'undefined'){
+				var name = my_comp_dict[i][0] ;
+				var conc = my_comp_dict[i][1] ;
+				var vol = my_comp_dict[i][2];
+				document.getElementById("component_name_" + i).value = name ;
+				document.getElementById("component_concentration_" + i).value = conc ;
+				document.getElementById("component_volume_" + i).value = vol ;
+			}
+		}
 }
 
 
 function add_buffer_entry_widget(event)
-{
-    if (buffer_count != 0){
-    var my_buf_dict = dict_for_buffer_inputs()
+{   var my_buf_values_dict = {};
+    var my_comp_values_dict = {}
+    if (buffer_count > 0 ){
+    my_buf_values_dict = dict_for_buffer_inputs();
+    }
+    if (component_count >  0){
+    my_comp_values_dict = dict_for_component_inputs();
     }
     buffer_count = buffer_count + 1;
     if(window.console){
@@ -108,51 +134,66 @@ function add_buffer_entry_widget(event)
     var new_buffer_component = ("<li><div class=\"buffer_entry\"><label for=\"buffer\" id=\"buffer_label\">Buffer" + buffer_count + ":</label><input id=\"buffer_name_" + buffer_count + "\"><input id=\"buffer_volume_" + buffer_count + "\"><input id=\"buffer_concentration_" + buffer_count + "\"><input id=\"buffer_ph_" + buffer_count +"\"><input id=\"buffer_pka_" + buffer_count + "\"></div></li>");
     document.getElementById("component_containers").innerHTML += new_buffer_component ;
     
-	if (typeof my_buf_dict != 'undefined'){
+    fill_buffer_values(my_buf_values_dict);
+    fill_component_values(my_comp_values_dict);
+}
+
+function fill_buffer_values(values_dict)
+{  
+    var my_buf_dict = {}
+    my_buf_dict = values_dict;
+    if (values_dict.isEmpty()){
+		console.log("First call of fill buffers");
+		return null;
+	}
     		var mybuffers = document.getElementsByClassName("buffer_entry");
     		for (var i = 1 ; i <= mybuffers.length ; i++){
-        		var name = my_buf_dict[i][0];
-        		var conc = my_buf_dict[i][1];
-        		var vol = my_buf_dict[i][2];
-        		var ph = my_buf_dict[i][3];
-        		var pka = my_buf_dict[i][3];
-        		document.getElementById("buffer_name_" + i).value= name;
-        		document.getElementById("buffer_concentration_" + i).value=conc;
-        		document.getElementById("buffer_volume_" + i).value=vol;
-        		document.getElementById("buffer_ph_" + i).value=ph;
-        		document.getElementById("buffer_pka_" + i).value=pka;
-   	 }	
-    }
+				if (typeof my_buf_dict[i] != 'undefined'){
+					var name = my_buf_dict[i][0]
+					var conc = my_buf_dict[i][1]
+					var vol = my_buf_dict[i][2]
+					var ph = my_buf_dict[i][3]
+					var pka = my_buf_dict[i][4]
+					document.getElementById("buffer_name_" + i).value= name;
+					document.getElementById("buffer_concentration_" + i).value=conc;
+					document.getElementById("buffer_volume_" + i).value=vol;
+					document.getElementById("buffer_ph_" + i).value=ph;
+					document.getElementById("buffer_pka_" + i).value=pka;
+				}
+			}	
 }
 
 
 function dict_for_component_inputs(){
     var my_comp_dict = {}
-    // All plate id labels start from 1 and not zero
+    if (component_count <= 0 ){
+	return my_comp_dict
+	}
     for (var i = 1; i <= document.getElementsByClassName("component_entry").length ; i++){
-        // I dont know why I need to create this damn local variable
-        var cname = "component_name_" + i
-        var newname = document.getElementById(cname).value
-        var cconc = "component_concentration_" + i
-        var newconc = document.getElementById(cconc).value
-        var cvol = "component_volume_" + i
-        var newvol = document.getElementById(cvol).value 
-        console.log(newname,newconc,newvol)
+        cname = "component_name_" + i
+        newname = document.getElementById(cname).value
+        cconc = "component_concentration_" + i
+        newconc = document.getElementById(cconc).value
+        cvol = "component_volume_" + i
+        newvol = document.getElementById(cvol).value 
+        console.log("COMPONENTVALS",newname,newconc,newvol)
         my_comp_dict[i] = [newname,newconc,newvol]
     }
     return my_comp_dict
 }
 
 function dict_for_buffer_inputs(){
-    
     var my_puf_dict = {}
+    if (buffer_count = 0){
+    return my_puf_dict
+    }
     for (var i = 1; i <= document.getElementsByClassName("buffer_entry").length ; i++){
      var bname = "buffer_name_" + i;
-     var bnameval = document.getElementById(bname).value;
      var bconc = "buffer_concentration_" + i;
      var bvol = "buffer_volume_" + i;
      var bph = "buffer_ph_" + i;
      var bpka = "buffer_pka_" + i;
+     var bnameval = document.getElementById(bname).value;
      var bconcval = document.getElementById(bconc).value;
      var bvolval = document.getElementById(bvol).value;
      var bphval = document.getElementById(bph).value;
