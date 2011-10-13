@@ -16,9 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
 console.log("Loaded");
 }, false);
 
-var platecount = 0
-var component_count = 0 ;
-var buffer_count = 0 ;
+platecount = 0 ;
+component_count = 0 ;
 
 
 Object.prototype.isEmpty = function() {
@@ -82,7 +81,7 @@ function add_component_entry_widget(event)
         my_comp_values_dict  = dict_for_component_inputs(); 
     	console.log("HAVE_VALUES_FOR_COMPONENTS_TOTALLING",my_comp_values_dict);
 	}
-    if (buffer_count > 0){
+    if (my_buffer_count > 0){
 	my_buf_values_dict = dict_for_buffer_inputs();
     }
     component_count = component_count + 1;
@@ -102,7 +101,7 @@ function fill_component_values(values_dict)
     my_comp_dict = values_dict 
     if(values_dict.isEmpty()){
 		console.log("First Call of fill components");
-		return null;
+		return;
 	}
         var mycomponents = document.getElementsByClassName("component_entry");
         for (var i = 1; i <= mycomponents.length ; i++){
@@ -117,25 +116,27 @@ function fill_component_values(values_dict)
 		}
 }
 
+my_buffer_count = 0 ;
 
 function add_buffer_entry_widget(event)
 {   var my_buf_values_dict = {};
-    var my_comp_values_dict = {}
-    if (buffer_count > 0 ){
+    var my_comp_values_dict = {} ;
+    if (my_buffer_count > 0 ){
     my_buf_values_dict = dict_for_buffer_inputs();
     }
     if (component_count >  0){
     my_comp_values_dict = dict_for_component_inputs();
-    }
-    buffer_count = buffer_count + 1;
+    } 
+    my_buffer_count += 1 ;  
     if(window.console){
-        console.log("Adding buffer widget:" + buffer_count);
+        console.log("Adding buffer widget:" + my_buffer_count);
     }
-    var new_buffer_component = ("<li><div class=\"buffer_entry\"><label for=\"buffer\" id=\"buffer_label\">Buffer" + buffer_count + ":</label><input id=\"buffer_name_" + buffer_count + "\"><input id=\"buffer_volume_" + buffer_count + "\"><input id=\"buffer_concentration_" + buffer_count + "\"><input id=\"buffer_ph_" + buffer_count +"\"><input id=\"buffer_pka_" + buffer_count + "\"></div></li>");
+    var new_buffer_component = ("<li><div class=\"buffer_entry\"><label for=\"buffer\" id=\"buffer_label\">Buffer " + my_buffer_count + " </label><input id=\"buffer_name_" + my_buffer_count + "\"><input id=\"buffer_volume_" + my_buffer_count + "\"><input id=\"buffer_concentration_" + my_buffer_count + "\"><input id=\"buffer_ph_" + my_buffer_count +"\"><input id=\"buffer_pka_" + my_buffer_count + "\"></div></li>");
     document.getElementById("component_containers").innerHTML += new_buffer_component ;
     
     fill_buffer_values(my_buf_values_dict);
     fill_component_values(my_comp_values_dict);
+    console.log("Buffercount post addition" + my_buffer_count)
 }
 
 function fill_buffer_values(values_dict)
@@ -144,7 +145,7 @@ function fill_buffer_values(values_dict)
     my_buf_dict = values_dict;
     if (values_dict.isEmpty()){
 		console.log("First call of fill buffers");
-		return null;
+		return ;
 	}
     		var mybuffers = document.getElementsByClassName("buffer_entry");
     		for (var i = 1 ; i <= mybuffers.length ; i++){
@@ -183,17 +184,17 @@ function dict_for_component_inputs(){
 }
 
 function dict_for_buffer_inputs(){
-    var my_puf_dict = {}
-    if (buffer_count = 0){
-    return my_puf_dict
+    var my_puf_dict = {};
+    if (my_buffer_count == 0){
+    return my_puf_dict ;
     }
     for (var i = 1; i <= document.getElementsByClassName("buffer_entry").length ; i++){
-     var bname = "buffer_name_" + i;
+     var buffname = "buffer_name_" + i;
      var bconc = "buffer_concentration_" + i;
      var bvol = "buffer_volume_" + i;
      var bph = "buffer_ph_" + i;
      var bpka = "buffer_pka_" + i;
-     var bnameval = document.getElementById(bname).value;
+     var bnameval = document.getElementById(buffname).value;
      var bconcval = document.getElementById(bconc).value;
      var bvolval = document.getElementById(bvol).value;
      var bphval = document.getElementById(bph).value;
