@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7071c918-7450-433f-914c-0310d944c3be" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fabfile.py" afterPath="$PROJECT_DIR$/fabfile.py" />
     </list>
@@ -30,7 +29,7 @@
       <file leaf-file-name="fabfile.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fabfile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="20" selection-start="203" selection-end="203" vertical-scroll-proportion="0.12589929">
+            <state line="14" column="64" selection-start="522" selection-end="522" vertical-scroll-proportion="0.25179857">
               <folding />
             </state>
           </provider>
@@ -201,7 +200,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/fabfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="20" selection-start="203" selection-end="203" vertical-scroll-proportion="0.12589929">
+        <state line="14" column="64" selection-start="522" selection-end="522" vertical-scroll-proportion="0.25179857">
           <folding />
         </state>
       </provider>

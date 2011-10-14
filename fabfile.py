@@ -9,4 +9,7 @@ def prepare_deploy(message):
     local( "git add .idea/misc.xml")
     local("git add .gitignore")
     local("""git commit -m "%s" """ % message)
-  
+
+def deploy():
+    local("rsync -av index.html bioscree@code-itch.com:~bioscree/public_html/codeitch/gridzilla_web/")
+    local("rsync -av gridzilla_main.css bioscree@code-itch.com:~bioscree/public_html/codeitch/gridzilla_web/")
