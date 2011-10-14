@@ -41,10 +41,12 @@ function add_plate(event){
     if (typeof mydict != 'undefined'){
     var myplates = document.getElementsByClassName("plate_entry");
     for ( var i = 1 ; i <= myplates.length ; i++){
+        if (typeof mydict[i] != 'undefined'){
         var id1 = mydict[i][0];
         var id2 = mydict[i][1];
         document.getElementById("plate_label_" + i).nextSibling.value = id1 ;
-    document.getElementById("plate_label_" + i).nextSibling.nextSibling.value = id2 ;
+        document.getElementById("plate_label_" + i).nextSibling.nextSibling.value = id2 ;
+        }
     }
     }
 }
